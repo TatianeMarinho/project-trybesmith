@@ -4,7 +4,14 @@ export type RetunRegistrationProduct = {
   price: string,
 };
 
+export type ReturnProductsAll = {
+  id?: number,
+  name: string,
+  price: string,
+  orderId: number,
+};
+
 export type Returns = {
   status: number,
-  data: RetunRegistrationProduct | string
+  data: RetunRegistrationProduct | string | ReturnProductsAll[]
 };

@@ -14,6 +14,19 @@ async function registration(product: RegistrationProduct): Promise<Returns> {
   }
 }
 
+async function getAllProducts(): Promise<Returns> {
+  try {
+    const products = await ProductModel.findAll();
+    const result = products.map((product) => product.dataValues);
+
+    return { status: 200, data: result };
+  } catch (error) {
+    console.error(error);
+    return { status: 500, data: 'Internal Server Error' };
+  }
+}
+
 export default {
   registration,
+  getAllProducts,
 };
