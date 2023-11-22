@@ -25,6 +25,8 @@ describe('GET /orders', function () {
     // verifica se a resposta tem o status e os dados certos
     expect(response).to.have.status(200);
     expect(response.body).to.deep.equal(listOrderMock);
+    expect(response).to.have.property('status').that.is.a('number');
+    expect(response).to.have.property('body').that.is.a('array');
 
     // verifica se o metodo findAll foi chamado
     expect(liststub).to.have.been.calledOnce;

@@ -9,7 +9,7 @@ async function login(
   const { body } = req;
 
   try {
-    const { status, data } = await loginService.verifylogin(body);
+    const { status, data } = await loginService.verifyLogin(body);
     return res.status(status).json(data);
   } catch (err) {
     next(err);

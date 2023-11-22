@@ -3,7 +3,7 @@ import UserModel from '../database/models/user.model';
 import { LoginResponse, UserParams } from '../types/Login';
 import jwtUtil from '../util/jwt.util';
 
-async function verifylogin(user: UserParams): Promise<LoginResponse> {
+async function verifyLogin(user: UserParams): Promise<LoginResponse> {
   try {
     const host = await UserModel.findOne({ where: { username: user.username } });
 
@@ -20,5 +20,5 @@ async function verifylogin(user: UserParams): Promise<LoginResponse> {
 }
 
 export default {
-  verifylogin,
+  verifyLogin,
 };
