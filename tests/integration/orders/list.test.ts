@@ -1,11 +1,12 @@
 import sinon from 'sinon';
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
-import { listOrderMock } from '../../mocks/orders.mock';
+import { listOrderMock, modelMock } from '../../mocks/orders.mock';
 import OrderModel from '../../../src/database/models/order.model';
 import orderService from '../../../src/services/order.service'
 import app from '../../../src/app'
 import { error } from '../../mocks/orders.mock'
+import ProductModel from '../../../src/database/models/product.model';
 
 chai.use(chaiHttp);
 
@@ -13,11 +14,10 @@ describe('GET /orders', function () {
   beforeEach(function () { sinon.restore(); });
 
   it('Recebendo uma lista de pedidos', async function () {
-    // cria um stub para a funçao findAll
-    const liststub = sinon.stub(orderService, 'getAllOrder').resolves({
-      status: 200, data: listOrderMock
-    });
-    
+  const listOrders = modelMock.map((order) => OrderModel.build(order, {
+    include: [{ model: ProductModel, as: 'productIds', attributes: ['id'] }], 
+}));
+  const findAllStub = sinon.stub(OrderModel, 'findAll').resolves(listOrders);
     // faz a solicitaçao http simulada para o endopoint
     const response = await chai.request(app)
     .get('/orders')
@@ -29,11 +29,10 @@ describe('GET /orders', function () {
     expect(response).to.have.property('body').that.is.a('array');
 
     // verifica se o metodo findAll foi chamado
-    expect(liststub).to.have.been.calledOnce;
+    expect(findAllStub).to.have.been.calledOnce;
   })
 
   it('Não conseguindo receber uma lista de pedidos', async function () {
-    // cria stub para a funçao findAll
     sinon.stub(OrderModel, 'findAll').rejects(error);
 
     // faz uma solicitaçao Http simulado para o endopoint
