@@ -10,7 +10,7 @@ export type UserParams = {
 
 interface SuccessResponse {
   status: number;
-  data: string; // Assumindo que 'data' é uma string representando o token
+  data: { token: string; }; // Assumindo que 'data' é uma string representando o token
 }
 
 interface ErrorResponse {

@@ -23,7 +23,7 @@ describe('LoginController', function () {
     // arrange
     const loginStub = sinon.stub(loginService, 'verifyLogin').resolves({
       status: 200,
-      data: 'mocked_token',
+      data: { token: 'mocked_token' },
     });
 
     const nextStub = sinon.stub();
@@ -33,7 +33,7 @@ describe('LoginController', function () {
 
     // assert
     expect(res.status).to.have.been.calledWith(200);
-    expect(res.json).to.have.been.calledWith('mocked_token');
+    expect(res.json).to.have.been.calledWith({ token: 'mocked_token' });
     //valida se ao chamar a funçao allproducts ela interage com a camada de service corretamente apenas uma vez
     expect(loginStub).to.have.been.calledOnce;
   });
@@ -42,7 +42,7 @@ describe('LoginController', function () {
     // arrange
     const loginStub = sinon.stub(loginService, 'verifyLogin').resolves({
       status: 500,
-      data: 'Internal Server Error',
+      data: { message: 'Internal Server Error' },
     });
 
     const nextStub = sinon.stub();
@@ -52,7 +52,7 @@ describe('LoginController', function () {
 
     // assert
     expect(res.status).to.have.been.calledWith(500);
-    expect(res.json).to.have.been.calledWith('Internal Server Error')
+    expect(res.json).to.have.been.calledWith({ message: 'Internal Server Error' },)
 
     expect(loginStub).to.have.been.calledOnce;
   });

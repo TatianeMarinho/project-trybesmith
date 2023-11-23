@@ -15,7 +15,7 @@ describe('POST /login', function () {
   beforeEach(function () { sinon.restore(); });
 
   it('Retornando o token ao fazer login com as informações corretas', async function () {
-    const token = 'fake-jwt-token'
+    const token = { token: 'fake-jwt-token' };
     const userLogin = UserModel.build(userTableMock);
     const modelStub = sinon.stub(UserModel, 'findOne').resolves(userLogin);
     const bcryptStub = sinon.stub(bcrypt, 'compareSync').returns(true);

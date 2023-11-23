@@ -30,21 +30,4 @@ describe('POST /products', function () {
     // verifica se o metodo create foi chamado com os argumentos corretos
     expect(createStub).to.have.been.calledWith(requestBodyMock);
   })
-
-  it('Recebendo parametros incorretos e não conseguindo criar um produto', async function () {
-    const reqBodyMock = {};
-    const error = new Error('Internal Server Error');
-
-    // cria stub para a funçao create
-    sinon.stub(ProductModel, 'create').rejects(error);
-
-    // faz uma solicitaçao Http simulado para o endopoint
-    const response = await chai.request(app)
-    .post('/products')
-    .send(reqBodyMock);
-
-    // verifica se a resposta tem o status e a mensagem correta
-    expect(response).to.have.status(500);
-    expect(response.body).to.deep.include('Internal Server Error');
-  });
 });

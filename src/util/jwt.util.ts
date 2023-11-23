@@ -7,9 +7,13 @@ type TokenPayload = {
   username: string;
 };
 
-function sign(payload: TokenPayload): string {
+type TokenReturn = {
+  token: string;
+};
+
+function sign(payload: TokenPayload): TokenReturn {
   const token = jwt.sign(payload, secret);
-  return token;
+  return { token };
 }
 
 function verify(token: string): TokenPayload {
